@@ -1,9 +1,13 @@
-#rename local user 
-if(get-localuser -name Administator)
-  (rename-localuser Administator ExAdmin)
-if(get-localuser -name Guest)
-  (rename-localuser Administator ExGuest)
+#Enables script running
+Set-ExecutionPolicy Unrestricted
 
+#rename local user 
+if(get-localuser -name Administator) {
+  (rename-localuser Administator ExAdmin)
+}
+if(get-localuser -name Guest) {
+  (rename-localuser Administator ExGuest)
+}
 #audit policy
 auditpol /restore \file/audit.csv
 
@@ -28,3 +32,5 @@ Disable-WindowsOptionalFeature -FeatureName "Microsoft-Ftp-Client" -Online -NoRe
 #update mozilla thunderbird
 #remove media files
 #RDP network level authentication enabled
+#disables script running
+Set-ExecutionPolicy Restricted
