@@ -8,3 +8,4 @@ if(get-localuser -name Guest)
 auditpol /restore \file/audit.csv
 
 #secedit policy
+secedit /import /cfg\Password Policies.inf
