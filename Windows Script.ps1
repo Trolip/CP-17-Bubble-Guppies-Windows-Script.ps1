@@ -9,3 +9,8 @@ auditpol /restore \file/audit.csv
 
 #secedit policy
 secedit /import /cfg\Password Policies.inf
+
+#windows defender firewall
+Set-NetFirewallProfile -Profile Domain, Private, Public -DefaultInboundAction Block -DefaultOutboundAction Allow
+Get-NetFirewallProfile
+#todo
