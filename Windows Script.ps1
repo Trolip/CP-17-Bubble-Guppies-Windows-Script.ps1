@@ -10,7 +10,21 @@ auditpol /restore \file/audit.csv
 #secedit policy
 secedit /import /cfg\Password Policies.inf
 
-#windows defender firewall
+#windows defender firewall in advanced
 Set-NetFirewallProfile -Profile Domain, Private, Public -DefaultInboundAction Block -DefaultOutboundAction Allow
 Get-NetFirewallProfile
+#disable FTP
+Disable-WindowsOptionalFeature -FeatureName "Microsoft-Ftp-Client" -Online -NoRestart
 #todo
+#removed unauth users
+#change users from admin to standard and back
+#see if users have a good password and set their password to a predetermined value
+#enable windows firewall
+#disable auto play
+#Windows SmartScreen configured to warn or block
+#World Wide Web Publishing service has been stopped and disabled
+#update firefox
+#update chrome
+#update mozilla thunderbird
+#remove media files
+#RDP network level authentication enabled
