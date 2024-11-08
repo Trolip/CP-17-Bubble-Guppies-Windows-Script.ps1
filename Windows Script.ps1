@@ -4,4 +4,7 @@ if(get-localuser -name Administator)
 if(get-localuser -name Guest)
   (rename-localuser Administator ExGuest)
 
-!audit policy
+#audit policy
+auditpol /restore \file/audit.csv
+
+#secedit policy
