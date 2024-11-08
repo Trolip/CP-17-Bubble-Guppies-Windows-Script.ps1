@@ -33,4 +33,12 @@ Disable-WindowsOptionalFeature -FeatureName "Microsoft-Ftp-Client" -Online -NoRe
 #remove media files
 #RDP network level authentication enabled
 #disables script running
+#firewall enabled
+#google chrome updated
+#notepad updated
+#removed wireshark
+#limit local use of blank password to console only
+#DO not allow anonoymous enumeration of SAM accounts
+#Disable FTP
+#windows updates majority
 Set-ExecutionPolicy Restricted
