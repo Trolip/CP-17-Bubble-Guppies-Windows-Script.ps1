@@ -101,7 +101,7 @@ if(Get-ChildItem "C:\Program Files\Notepad" -Recurse -Filter notepad.exe -or Get
 winget uninstall "Wireshark"
 
 #removed npcap
-winget uninstall "Npcap
+winget uninstall "Npcap"
 #limit local use of a blank password to console only
 #DO not allow anonymous enumeration of SAM accounts
 #windows update majority
