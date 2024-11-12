@@ -1,3 +1,5 @@
+#Download script in windows / change the name of your user
+Invoke-WebRequest -Uri "https://example.com/data.csv" -OutFile C:\Users\ashepard
 #Enables script running
 Set-ExecutionPolicy Unrestricted
 
