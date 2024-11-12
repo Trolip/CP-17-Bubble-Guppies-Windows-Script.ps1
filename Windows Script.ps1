@@ -1,3 +1,4 @@
+The next three code inputs must be run manually before the script is run.
 #Enables script running
 #Set-ExecutionPolicy Unrestricted
 
@@ -33,7 +34,7 @@ Stop-Service -Name ftpsvc
 Set-Service -Name ftpsvc -StartupType Disabled
 Disable-WindowsOptionalFeature -Online -FeatureName "IIS-FTPServer" -Remove
 
-#todo
+                                                                  #todo
 
 #create users/change name and replicate the second line for each user
 $Password = ConvertTo-SecureString "20-R1p-CdR-24" -AsPlainText -Force
@@ -59,18 +60,48 @@ Start-Service -Name WinDefend
 Set-Service -Name WinDefend -StartupType Automatic
 
 #disable auto-play
+#Disable AutoPlay for all drives
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\AutoplayHandlers" -Name "DisableAutoplay" -Value 1
+#Disable AutoPlay for CD/DVD and other media types
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" -Name "NoDriveTypeAutoRun" -Value 0x000000FF
+
 #Windows SmartScreen configured to warn or block
+Set-MpPreference -EnableSmartScreen $true -SmartScreenAppInstallControl "Block"
+
 #World Wide Web Publishing service has been stopped and disabled
+Stop-Service -Name w3svc
+
 #update firefox
+if(Get-ChildItem "C:\Program Files\Mozilla Firefox" -Recurse -Filter firefox.exe -or Get-ChildItem "C:\Program Files (x86)\Mozilla Firefox" -Recurse -Filter firefox.exe
+){
+ winget upgrade "Mozilla Firefox"
+}
 #update chrome
+if(Get-ChildItem "C:\Program Files\Google Chrome" -Recurse -Filter Chrome.exe -or Get-ChildItem "C:\Program Files (x86)\Google Chrome" -Recurse -Filter chrome.exe
+){
+  winget upgrade "Google Chrome"
+}
 #update mozilla thunderbird
+if(Get-ChildItem "C:\Program Files\Mozilla Thunderbird" -Recurse -Filter thunderbird.exe -or Get-ChildItem "C:\Program Files (x86)\Mozilla Thunderbird" -Recurse -Filter thunderbird.exe
+){
+  winget upgrade "Mozilla Thunderbird"
+}
+#updates all apps
+winget upgrade --all
+
 #remove media files
 #RDP network level authentication enabled
-#disables script running
-#firewall enabled
-# Google Chrome updated
+
 #notepad updated
+if(Get-ChildItem "C:\Program Files\Notepad" -Recurse -Filter notepad.exe -or Get-ChildItem "C:\Program Files (x86)\Notepad" -Recurse -Filter notepad.exe
+){
+  winget upgrade "Notepad"
+}
 #removed Wireshark
+winget uninstall "Wireshark"
+
+#removed npcap
+winget uninstall "Npcap
 #limit local use of a blank password to console only
 #DO not allow anonymous enumeration of SAM accounts
 #windows update majority
@@ -90,7 +121,11 @@ Get-Process
 Stop-Process -Name "notepad"
 Stop-Process -Id 1234
 
+Using IIS Manager (GUI)
+If you prefer a GUI to manage the service:
 
+Press Windows + R, type inetmgr, and press Enter to open IIS Manager.
+In the left pane, expand the Server node.
 
 #Disables script running
 Set-ExecutionPolicy Restricted
