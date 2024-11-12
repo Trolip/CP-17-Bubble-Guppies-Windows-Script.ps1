@@ -1,4 +1,5 @@
-The next three code inputs must be run manually before the script is run.
+#The next three code inputs (4,7,10) must be run manually before the script is run.
+
 #Enables script running
 #Set-ExecutionPolicy Unrestricted
 
@@ -102,6 +103,7 @@ winget uninstall "Wireshark"
 
 #removed npcap
 winget uninstall "Npcap"
+
 #limit local use of a blank password to console only
 #DO not allow anonymous enumeration of SAM accounts
 #windows update majority
@@ -110,6 +112,7 @@ winget uninstall "Npcap"
 #log allowed, blocked, and ignored for advanced windows firewall
 #Disable-Bitlocker
 #Find-Script
+
 
 
 #stop services
@@ -126,6 +129,13 @@ If you prefer a GUI to manage the service:
 
 Press Windows + R, type inetmgr, and press Enter to open IIS Manager.
 In the left pane, expand the Server node.
+
+#Restart the computer
+Restart-computer
+
+#Pause and unpause the script
+read-host "Press Enter to continue..."
+write-host "Continuing script..."
 
 #Disables script running
 Set-ExecutionPolicy Restricted
