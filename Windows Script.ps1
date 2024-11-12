@@ -21,6 +21,11 @@ if(get-localuser -name Guest) {
 }
 
 #audit policy / fix
+# Set password expiration policy
+net accounts /maxpwage:60
+
+# Set minimum password length
+net accounts /minpwlen:8
 auditpol /restore /file\audit.csv
 
 #secedit policy/fix
@@ -36,7 +41,6 @@ Set-Service -Name ftpsvc -StartupType Disabled
 Disable-WindowsOptionalFeature -Online -FeatureName "IIS-FTPServer" -Remove
 
                                                                   #todo
-
 #create users/change name and replicate the second line for each user
 $Password = ConvertTo-SecureString "20-R1p-CdR-24" -AsPlainText -Force
 New-LocalUser -Name "JohnDoe" -Password $Password 
