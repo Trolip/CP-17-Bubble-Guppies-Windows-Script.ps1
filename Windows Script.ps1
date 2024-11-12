@@ -9,11 +9,15 @@
 
 #rename local user / fix
 if(get-localuser -name Administator) {
-  (rename-localuser Administator ExAdmin)
+  rename-localuser Administator ExAdmin
+  Disable-LocalUser -Name ExAdmin
+  
 }
 if(get-localuser -name Guest) {
-  (rename-localuser Guest ExGuest)
+  rename-localuser Guest ExGuest
+  Disable-LocalUser -Name ExGuest
 }
+
 #audit policy / fix
 auditpol /restore /file\audit.csv
 
@@ -23,16 +27,19 @@ secedit /import /cfg\Password Policies.inf
 #windows defender firewall in advanced
 Set-NetFirewallProfile -Profile Domain, Private, Public -DefaultInboundAction Block -DefaultOutboundAction Allow
 Get-NetFirewallProfile
+
 #disable FTP / fix
-Disable-WindowsOptionalFeature -FeatureName "Microsoft-Ftp-Client" -Online -NoRestart
+Disable-WindowsOptionalFeature -FeatureName Microsoft-Ftp-Client -Online -NoRestart
 #todo
-#create users
-$Password = ConvertTo-SecureString "P@ssw0rd" -AsPlainText -Force
-New-LocalUser -Name "JohnDoe" -Password $Password -FullName "John Doe" -Description "Test user account"
+
+#create users/change name and replicate for each user
+$Password = ConvertTo-SecureString "20-R1p-CdR-24" -AsPlainText -Force
+New-LocalUser -Name "JohnDoe" -Password $Password 
 
 #Add users to a group/change group and member names as needed
 Add-LocalGroupMember -Group "Users" -Member "JohnDoe", "JaneSmith"
 #removed unauth users
+Remove-localuser -Name "JohnDoe"
 #change users from admin to standard and back
 #see if users have a good password and set their password to a predetermined value
 #enable windows firewall
@@ -58,6 +65,15 @@ Add-LocalGroupMember -Group "Users" -Member "JohnDoe", "JaneSmith"
 #log allowed, blocked, and ignored for advanced windows firewall
 #Disable-Bitlocker
 #Find-Script
+#stop services
+Set-Service -Name "wuauserv" -StartupType "Disabled"
+Get-Service
+#stop process
+Get-Process
+Stop-Process -Name "notepad"
+Stop-Process -Id 1234
+
+
 
 #Disables script running
 Set-ExecutionPolicy Restricted
