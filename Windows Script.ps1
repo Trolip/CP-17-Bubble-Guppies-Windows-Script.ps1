@@ -6,7 +6,7 @@ if(get-localuser -name Administator) {
   (rename-localuser Administator ExAdmin)
 }
 if(get-localuser -name Guest) {
-  (rename-localuser Administator ExGuest)
+  (rename-localuser Guest ExGuest)
 }
 #audit policy
 auditpol /restore /file\audit.csv
@@ -41,6 +41,8 @@ Disable-WindowsOptionalFeature -FeatureName "Microsoft-Ftp-Client" -Online -NoRe
 #DO not allow anonoymous enumeration of SAM accounts
 #Disable FTP
 #windows updates majority
-restrict global object creation
-RDP Security Layer set to SSL
+#restrict global object creation
+#RDP Security Layer set to SSL
+
+#Disables script running
 Set-ExecutionPolicy Restricted
