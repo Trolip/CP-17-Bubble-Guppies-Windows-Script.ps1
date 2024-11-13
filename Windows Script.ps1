@@ -21,11 +21,13 @@ if(get-localuser -name Guest) {
 }
 
 #audit policy / fix
-net accounts /maxpwage:60
-net accounts /minpwlen:8
 auditpol /restore /file:audit.csv
 
 #secedit policy/fix
+net accounts /maxpwage:60
+net accounts /minpwlen:8
+net accounts /pwhist:8
+net accounts /
 secedit /import /cfg:Password Policies.inf
 
 # Windows Defender firewall in advanced
