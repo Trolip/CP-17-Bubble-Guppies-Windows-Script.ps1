@@ -23,10 +23,10 @@ if(get-localuser -name Guest) {
 #audit policy / fix
 net accounts /maxpwage:60
 net accounts /minpwlen:8
-auditpol /restore /file\audit.csv
+auditpol /restore /file:audit.csv
 
 #secedit policy/fix
-secedit /import /cfg\Password Policies.inf
+secedit /import /cfg:Password Policies.inf
 
 # Windows Defender firewall in advanced
 Set-NetFirewallProfile -Profile Domain, Private, Public -DefaultInboundAction Block -DefaultOutboundAction Allow
