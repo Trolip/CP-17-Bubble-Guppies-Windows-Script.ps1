@@ -22,15 +22,22 @@ if(get-localuser -name Guest) {
 
 #audit policy / fix
 auditpol /restore /file:audit.csv
+auditpol /get /category:*
+write-host "Check the audits to make sure they are all set. Then, press Enter to continue..."
+read-host
 
 #secedit policy/fix
 secedit /import /cfg:Password Policies.inf
 
+write-host "Check the audits to make sure they are all set. Then, press Enter to continue..."
+read-host
 # Windows Defender firewall in advanced
 Set-NetFirewallProfile -Profile Domain, Private, Public -DefaultInboundAction Block -DefaultOutboundAction Allow
 Get-NetFirewallProfile
+write-host "Check the firewall domain, private, and public for blocked inbound action and allowed outbound action. Then, press Enter to continue..."
+read-host
 
-#disable FTP / fix
+#disable FTP
 Stop-Service -Name ftpsvc
 Set-Service -Name ftpsvc -StartupType Disabled
 Disable-WindowsOptionalFeature -Online -FeatureName "IIS-FTPServer" -Remove
@@ -51,7 +58,8 @@ Add-LocalGroupMember -Group "Administrators" -Member "JohnDoe"
 Remove-LocalGroupMember -Group "Administrators" -Member "JohnDoe"
 
 #see if users have a good password and set their password to a predetermined value
-
+for (get-localuser - Group "Users") {
+  if(
 #Enable Windows firewall and cloud-delivered protection
 Set-MpPreference -DisableRealtimeMonitoring $false
 Set-MpPreference -DisableAntiSpyware $false
@@ -106,6 +114,8 @@ winget uninstall "Npcap"
 #limit local use of a blank password to console only
 #DO not allow anonymous enumeration of SAM accounts
 #windows update majority
+Install-Module -Name PSWindowsUpdate -Force -Scope CurrentUser
+Install-WindowsUpdate -AcceptAll -AutoReboot
 #restrict global object creation
 #RDP Security Layer set to SSL
 #log allowed, blocked, and ignored for advanced windows firewall
@@ -116,7 +126,7 @@ winget uninstall "Npcap"
 
 #stop services
 Get-Service
-Set-Service -Name "wuauserv" -StartupType "Disabled"
+Set-Service -Name "nc.exe" -StartupType "Disabled"
 
 #stop process
 Get-Process
@@ -133,8 +143,8 @@ In the left pane, expand the Server node.
 Restart-computer
 
 #Pause and unpause the script
-read-host "Press Enter to continue..."
-write-host "Continuing script..."
+write-host "Script Finished"
+
 
 #Disables script running
 Set-ExecutionPolicy Restricted
