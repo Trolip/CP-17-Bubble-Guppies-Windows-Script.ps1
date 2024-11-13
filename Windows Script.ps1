@@ -21,10 +21,7 @@ if(get-localuser -name Guest) {
 }
 
 #audit policy / fix
-# Set password expiration policy
 net accounts /maxpwage:60
-
-# Set minimum password length
 net accounts /minpwlen:8
 auditpol /restore /file\audit.csv
 
