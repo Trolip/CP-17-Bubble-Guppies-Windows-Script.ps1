@@ -9,6 +9,11 @@
 #run script
 #C:\Users\ashepard\Downloads\Script.ps1
 
+#find .mp3 files
+Get-ChildItem -Path "C:\Users" -Filter "*.mp3" -Force -Recurse
+write-host "Go delete these mp3 files before continuing the script. Press Enter to continue"
+read-host
+
 #rename local user / fix
 if(get-localuser -name Administator) {
   rename-localuser Administator ExAdmin
@@ -19,7 +24,8 @@ if(get-localuser -name Guest) {
   rename-localuser Guest ExGuest
   Disable-LocalUser -Name ExGuest
 }
-
+                                                            
+                                                            #SECPOL
 #audit policy / fix
 auditpol /restore /file:audit.csv
 auditpol /get /category:*
@@ -31,17 +37,33 @@ secedit /import /cfg:Password Policies.inf
 write-host "Check the audits to make sure they are all set. Then, press Enter to continue..."
 read-host
 
+                                                            #FIREWALL
 # Windows Defender firewall in advanced
 Set-NetFirewallProfile -Profile Domain, Private, Public -DefaultInboundAction Block -DefaultOutboundAction Allow
 Get-NetFirewallProfile
 write-host "Check the firewall domain, private, and public for blocked inbound action and allowed outbound action. Then, press Enter to continue..."
 read-host
 
+#Enable Windows firewall and cloud-delivered protection
+Set-MpPreference -DisableRealtimeMonitoring $false
+Set-MpPreference -DisableAntiSpyware $false
+Set-MpPreference -CloudBlockLevel 2
+Start-Service -Name WinDefend
+Set-Service -Name WinDefend -StartupType Automatic
+
+                                              #SERVICES, PROCESSES, AND OPTIONAL FEATURES
 #disable FTP
 Stop-Service -Name ftpsvc
 Set-Service -Name ftpsvc -StartupType Disabled
 Disable-WindowsOptionalFeature -Online -FeatureName "IIS-FTPServer" -Remove
 
+#Disable AutoPlay for all drives
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\AutoplayHandlers" -Name "DisableAutoplay" -Value 1
+
+#Disable AutoPlay for CD/DVD and other media types
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" -Name "NoDriveTypeAutoRun" -Value 0x000000FF
+                                                            
+                                                            #USERS
 #create users/change name and replicate the second line for each user
 $Password = ConvertTo-SecureString "20-R1p-CdR-24" -AsPlainText -Force
 New-LocalUser -Name "JohnDoe" -Password $Password 
@@ -50,6 +72,9 @@ New-LocalUser -Name "JohnDoe" -Password $Password
 Add-LocalGroupMember -Group "Users" -Member "JohnDoe", "JaneSmith"
 
 #removed unauthorized users
+get-localuser
+write-host "Add names of users that should be deleted."
+$input = read-host 
 Remove-localuser -Name "JohnDoe"
 
 #change users from admin to standard and back
@@ -61,12 +86,7 @@ Remove-LocalGroupMember -Group "Administrators" -Member "JohnDoe"
 #for (get-localuser -Group "Users") {
   #if(
 
-#Enable Windows firewall and cloud-delivered protection
-Set-MpPreference -DisableRealtimeMonitoring $false
-Set-MpPreference -DisableAntiSpyware $false
-Set-MpPreference -CloudBlockLevel 2
-Start-Service -Name WinDefend
-Set-Service -Name WinDefend -StartupType Automatic
+
 
 #disable auto-play
   #Disable AutoPlay for all drives
