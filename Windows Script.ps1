@@ -112,11 +112,12 @@ get-localuser
 $names = @()
 while ($true) {
   $input = read-host "Add the name of a user that should be deleted or DONE to continue the script."
-  if ($input -eq "DONE"){
+  if ($input -eq "DONE") {
     break
   }
   else {
     $names += $input
+    }
 }
   
 foreach ($name in $names) {
@@ -132,11 +133,12 @@ get-localuser
 $names = @()
 while ($true) {
   $input = read-host "Add the name of a user that should be deleted or DONE to continue the script."
-  if ($input -eq "DONE"){
+  if ($input -eq "DONE") {
     break
   }
   else {
     $names += $input
+  }
 }
   
 foreach ($name in $names) {
@@ -147,7 +149,7 @@ foreach ($name in $names) {
 get-localgroup
 while ($true) {
   $input = read-host "Enter 1 to add a user to a group, 2 to create a group, or DONE to continue the script."
-  if ($input -eq "DONE"){
+  if ($input -eq "DONE") {
     break
   }
   elseif ($input -eq "1") {
@@ -166,7 +168,7 @@ get-localuser
 $names = @()
 while ($true) {
   $input = read-host "Enter 1 to remove a user from a group, 2 to delete a group, or DONE to continue the script."
-  if ($input -eq "DONE"){
+  if ($input -eq "DONE") {
     break
   }
   elseif ($input -eq "1") {
