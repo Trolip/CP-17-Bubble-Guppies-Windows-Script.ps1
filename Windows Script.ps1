@@ -29,20 +29,18 @@ if(get-localuser -name Guest) {
 #audit policy / fix
 auditpol /restore /file:audit.csv
 auditpol /get /category:*
-write-host "Check the audits to make sure they are all set. Then, press Enter to continue..."
-read-host
+read-host "Check the audits to make sure they are all set. Then, press Enter to continue..."
 
 #secedit policy/fix
 secedit /import /cfg:Password Policies.inf
-write-host "Check the audits to make sure they are all set. Then, press Enter to continue..."
-read-host
+read-host "Check the audits to make sure they are all set. Then, press Enter to continue..."
 
                                                             #FIREWALL
 # Windows Defender firewall in advanced
 Set-NetFirewallProfile -Profile Domain, Private, Public -DefaultInboundAction Block -DefaultOutboundAction Allow
 Get-NetFirewallProfile
-write-host "Check the firewall domain, private, and public for blocked inbound action and allowed outbound action. Then, press Enter to continue..."
-read-host
+read-host "Check the firewall domain, private, and public for blocked inbound action and allowed outbound action. Then, press Enter to continue..."
+
 
 #Enable Windows firewall and cloud-delivered protection
 Set-MpPreference -DisableRealtimeMonitoring $false
@@ -62,82 +60,95 @@ Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer
 
 #Disable AutoPlay for CD/DVD and other media types
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" -Name "NoDriveTypeAutoRun" -Value 0x000000FF
-                                                            
-                                                            #USERS
-#create users/change name and replicate the second line for each user
-$Password = ConvertTo-SecureString "20-R1p-CdR-24" -AsPlainText -Force
-New-LocalUser -Name "JohnDoe" -Password $Password 
-
-#Add users to a group/change group and member names as needed
-Add-LocalGroupMember -Group "Users" -Member "JohnDoe", "JaneSmith"
-
-#removed unauthorized users
-get-localuser
-write-host "Add names of users that should be deleted."
-$input = read-host 
-Remove-localuser -Name "JohnDoe"
-
-#change users from admin to standard and back
-Add-LocalGroupMember -Group "Administrators" -Member "JohnDoe"
-Remove-LocalGroupMember -Group "Administrators" -Member "JohnDoe"
-
-                                                                #FIX
-#see if users have a good password and set their password to a predetermined value
-#for (get-localuser -Group "Users") {
-  #if(
-
-
-
-#disable auto-play
-  #Disable AutoPlay for all drives
-Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\AutoplayHandlers" -Name "DisableAutoplay" -Value 1
-  #Disable AutoPlay for CD/DVD and other media types
-Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" -Name "NoDriveTypeAutoRun" -Value 0x000000FF
 
 #Windows SmartScreen configured to warn or block
 Set-MpPreference -EnableSmartScreen $true -SmartScreenAppInstallControl "Block"
 
 #World Wide Web Publishing service has been stopped and disabled
 Stop-Service -Name w3svc
-
-#update firefox
-if(Get-ChildItem "C:\Program Files\Mozilla Firefox" -Recurse -Filter firefox.exe -or Get-ChildItem "C:\Program Files (x86)\Mozilla Firefox" -Recurse -Filter firefox.exe
-){
- winget upgrade "Mozilla Firefox"
+                                                           
+                                                            #USERS
+#create users
+$password = ConvertTo-SecureString "20-R1p-CdR-24" -AsPlainText -Force
+                                                              #EDIT
+get-localuser
+$names = @()
+while ($true) {
+  $input = read-host "Add the name of a user that should be deleted or DONE to continue the script."
+  if ($input -eq "DONE"){
+    break
+  }
+  else {
+    $names += $input
+}
+  
+foreach ($name in $names) {
+  New-LocalUser -Name $names -Password $password
+  set-localuser -name "" -password $password
 }
 
-#update chrome
-if(Get-ChildItem "C:\Program Files\Google Chrome" -Recurse -Filter Chrome.exe -or Get-ChildItem "C:\Program Files (x86)\Google Chrome" -Recurse -Filter chrome.exe
-){
-  winget upgrade "Google Chrome"
+
+
+
+#removed unauthorized users
+get-localuser
+$names = @()
+while ($true) {
+  $input = read-host "Add the name of a user that should be deleted or DONE to continue the script."
+  if ($input -eq "DONE"){
+    break
+  }
+  else {
+    $names += $input
+}
+  
+foreach ($name in $names) {
+  Remove-localuser -Name $name
 }
 
-#update mozilla thunderbird
-if(Get-ChildItem "C:\Program Files\Mozilla Thunderbird" -Recurse -Filter thunderbird.exe -or Get-ChildItem "C:\Program Files (x86)\Mozilla Thunderbird" -Recurse -Filter thunderbird.exe
-){
-  winget upgrade "Mozilla Thunderbird"
+#add users to a group / create groups
+get-localgroup
+while ($true) {
+  $input = read-host "Enter 1 to add a user to a group, 2 to create a group, or DONE to continue the script."
+  if ($input -eq "DONE"){
+    break
+  }
+  else if ($input -eq "1") {
+    $username = read-host "Enter the name of a user who will be joining a group."
+    $group = read-host "Enter the group name that they'll be joining."
+    Add-LocalGroupMember -Group $group -Member $username
+  }
+ else if ($input -eq "2") {
+    $group = read-host "Enter the group name that will be created."
+    New-LocalGroup -Name $group
+  }
 }
 
-#notepad updated
-if(Get-ChildItem "C:\Program Files\Notepad" -Recurse -Filter notepad.exe -or Get-ChildItem "C:\Program Files (x86)\Notepad" -Recurse -Filter notepad.exe
-){
-  winget upgrade "Notepad"
+#remove users from a group / delete groups
+get-localuser
+$names = @()
+while ($true) {
+  $input = read-host "Enter 1 to remove a user from a group, 2 to delete a group, or DONE to continue the script."
+  if ($input -eq "DONE"){
+    break
+  }
+  else if ($input -eq "1") {
+    $username = read-host "Enter the name of a user who will be removed from a group."
+    $group = read-host "Enter the group name that they'll be leaving."
+    Remove-LocalGroupMember -Group $group -Member $username
+  }
+ else if ($input -eq "2") {
+    $group = read-host "Enter the group name that will be created."
+    New-LocalGroup -Name $group
+  }
 }
 
-#updates all apps
-winget upgrade --all
+                                                                #FIX
+#see if users have a good password and set their password to a predetermined value
+#foreach (get-localuser -Group "Users") {
+  #if(
 
-#removed Wireshark
-winget uninstall "Wireshark"
-
-#removed npcap
-winget uninstall "Npcap"
-
-                                                          #CHECK
-                                                          
-#windows update majority
-Install-Module -Name PSWindowsUpdate -Force -Scope CurrentUser
-Install-WindowsUpdate -AcceptAll -AutoReboot
+                                                              
 
 #limit local use of a blank password to console only
 Set-LocalUser -Name "UserName" -PasswordNeverExpires $false
@@ -248,11 +259,48 @@ Get-Process
 Stop-Process -Name "notepad"
 Stop-Process -Id 1234
 
+  #UPDATES
+#update firefox
+if(Get-ChildItem "C:\Program Files\Mozilla Firefox" -Recurse -Filter firefox.exe -or Get-ChildItem "C:\Program Files (x86)\Mozilla Firefox" -Recurse -Filter firefox.exe
+){
+ winget upgrade "Mozilla Firefox"
+}
+
+#update chrome
+if(Get-ChildItem "C:\Program Files\Google Chrome" -Recurse -Filter Chrome.exe -or Get-ChildItem "C:\Program Files (x86)\Google Chrome" -Recurse -Filter chrome.exe
+){
+  winget upgrade "Google Chrome"
+}
+
+#update mozilla thunderbird
+if(Get-ChildItem "C:\Program Files\Mozilla Thunderbird" -Recurse -Filter thunderbird.exe -or Get-ChildItem "C:\Program Files (x86)\Mozilla Thunderbird" -Recurse -Filter thunderbird.exe
+){
+  winget upgrade "Mozilla Thunderbird"
+}
+
+#notepad updated
+if(Get-ChildItem "C:\Program Files\Notepad" -Recurse -Filter notepad.exe -or Get-ChildItem "C:\Program Files (x86)\Notepad" -Recurse -Filter notepad.exe
+){
+  winget upgrade "Notepad"
+}
+
+#updates all apps
+winget upgrade --all
+
+#removed Wireshark
+winget uninstall "Wireshark"
+
+#removed npcap
+winget uninstall "Npcap"
+                                                          
+#windows update majority
+Install-Module -Name PSWindowsUpdate -Force -Scope CurrentUser
+Install-WindowsUpdate -AcceptAll -AutoReboot
+
 #Restart the computer
 Restart-computer
 
-#Pause and unpause the script
-write-host "Script Finished"
+write-host "SCript Finished"
 
 #Disables script running
 Set-ExecutionPolicy Restricted
