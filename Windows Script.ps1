@@ -97,9 +97,6 @@ if(Get-ChildItem "C:\Program Files\Mozilla Thunderbird" -Recurse -Filter thunder
 #updates all apps
 winget upgrade --all
 
-#remove media files
-#RDP network level authentication enabled
-
 #notepad updated
 if(Get-ChildItem "C:\Program Files\Notepad" -Recurse -Filter notepad.exe -or Get-ChildItem "C:\Program Files (x86)\Notepad" -Recurse -Filter notepad.exe
 ){
@@ -111,18 +108,45 @@ winget uninstall "Wireshark"
 #removed npcap
 winget uninstall "Npcap"
 
-#limit local use of a blank password to console only
-#DO not allow anonymous enumeration of SAM accounts
+
 #windows update majority
 Install-Module -Name PSWindowsUpdate -Force -Scope CurrentUser
 Install-WindowsUpdate -AcceptAll -AutoReboot
+#limit local use of a blank password to console only
+#DO not allow anonymous enumeration of SAM accounts
 #restrict global object creation
 #RDP Security Layer set to SSL
 #log allowed, blocked, and ignored for advanced windows firewall
 #Disable-Bitlocker
 #Find-Script
-
-
+#passwords stored using reversible encryption
+#LAN Manager only sends NTLMv2 responses'
+#NULL session fallback is prohibited'
+#Elevation prompts run on the secure desktop'
+#Audit object access [Success/Failure]'
+#Users cannot add or logon with Microsoft accounts'
+#Nobody can access Credential Manager as a trusted caller'
+#Firefox profiles and sync disabled'
+#Core dumps are disabled on system crash'
+#Windows Defender no longer runs in passive mode'
+#Only administrators can install printer drivers'
+#The system requires approval from an administrator before running unknown software (Defender Smartscreen)'
+#Users cannot bypass attempts to run unknown software (Defender Smartscreen)'
+#File/registry write failures are virtualized to per-user locations'
+#App notifications do not show on the lock screen
+#Windows Automatic Updates are enabled'
+#User access to the Store application is prohibited'
+#UEFI Secure Boot is enabled'
+#Windows Update services are running - wuauserv and WaaSMedicSvc'
+#Windows Event Log service is running'
+#Removed Telnet from Windows features'
+#RDP connections require SSL'
+#RDP requires a secure RPC connection'
+#The system is configured to use FIPS 140 compliant cryptographic algorithms'
+#File and registry write failures are virtualized to per-user locations'
+#check for hidden network shares
+#UPnP is not enabled / Get-NetFirewallRule -DisplayGroup "Network Discovery" | Where-Object { $_.Enabled -eq "False"}'
+#check for shell backdoor in windows/systemresources
 
 #stop services
 Get-Service
