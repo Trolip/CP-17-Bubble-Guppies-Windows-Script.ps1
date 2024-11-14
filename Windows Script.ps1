@@ -121,7 +121,7 @@ while ($true) {
   
 foreach ($name in $names) {
   New-LocalUser -Name $names -Password $password
-  set-localuser -name "" -password $password
+  set-localuser -name $names -password $password
 }
 
 
@@ -150,12 +150,12 @@ while ($true) {
   if ($input -eq "DONE"){
     break
   }
-  else if ($input -eq "1") {
+  elseif ($input -eq "1") {
     $username = read-host "Enter the name of a user who will be joining a group."
     $group = read-host "Enter the group name that they'll be joining."
     Add-LocalGroupMember -Group $group -Member $username
   }
- else if ($input -eq "2") {
+ elseif ($input -eq "2") {
     $group = read-host "Enter the group name that will be created."
     New-LocalGroup -Name $group
   }
@@ -169,12 +169,12 @@ while ($true) {
   if ($input -eq "DONE"){
     break
   }
-  else if ($input -eq "1") {
+  elseif ($input -eq "1") {
     $username = read-host "Enter the name of a user who will be removed from a group."
     $group = read-host "Enter the group name they'll be leaving."
     Remove-LocalGroupMember -Group $group -Member $username
   }
- else if ($input -eq "2") {
+ elseif ($input -eq "2") {
     $group = read-host "Enter the group name that will be created."
     New-LocalGroup -Name $group
   }
