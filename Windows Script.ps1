@@ -2,7 +2,6 @@
 
 #Enables script running
 #Set-ExecutionPolicy Unrestricted
-#y
 
 #Download the script in Windows / change the name to your current user
 #Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Trolip/CP-17-Bubble-Guppies-Windows-Script.ps1/refs/heads/main/Windows%20Script.ps1" -OutFile C:\Users\ashepard\Downloads\Script.ps1
@@ -221,9 +220,9 @@ Set-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies
 read-host "Go to security options in local security policies and enable Accounts: Block Microsoft accounts. Press enter to continue."
 
 #Nobody can access Credential Manager as a trusted caller
-read-host "Navigate to gpedit.msc"
-read-host "Go to Computer Configuration > Administrative Templates > System > Credentials Delegation."
-read-host "disable the following policies to ensure Credential Manager is protected:"
+read-host "Navigate to gpedit.msc. Press enter to continue."
+read-host "Go to Computer Configuration > Administrative Templates > System > Credentials Delegation. Press enter to continue."
+read-host "disable the following policies to ensure Credential Manager is protected:. Press enter to continue."
 write-host "Allow delegating saved credentials with NTLM-only server authentication"
 write-host "Allow delegating saved credentials with NTLM authentication"
 write-host "Allow delegating saved credentials"
@@ -240,19 +239,19 @@ Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\CrashControl" -Na
 Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers" -Name "RestrictDriverInstall" -Value 1
 
 #File/registry write failures are virtualized to per-user locations
-read-host "navigate to gpedit.msc:"
-read-host "Go to Computer Configuration > Administrative Templates > Windows Components > User Account Control."
-read-host "Find and disable the Policy:"
-write-host "Locate the policy: Virtualize file and registry write failures to per-user locations"
+read-host "navigate to gpedit.msc. Press enter to continue."
+read-host "Go to Computer Configuration > Administrative Templates > Windows Components > User Account Control. Press enter to continue."
+write-host "Find and disable the Policy:"
+write-host "Virtualize file and registry write failures to per-user locations"
 read-host "Press enter to move on."
 
 #App notifications do not show on the lock screen
 #Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings" -Name "NOC_GLOBAL_SETTING_ALLOW_TOASTS_ABOVE_LOCK" -Value 0
 
 #User access to the Store application is prohibited'
-read-host "navigate to gpedit.msc:"
-read-host "Go to Computer Configuration > Administrative Templates > Windows Components > Store."
-read-host "Find and disable the Policy:"
+read-host "navigate to gpedit.msc. Press enter to continue."
+read-host "Go to Computer Configuration > Administrative Templates > Windows Components > Store. Press enter to continue."
+write-host "Find and disable the Policy:"
 write-host "Locate the policy: Turn off the Store application"
 read-host "Press enter to move on."
 
@@ -264,7 +263,7 @@ Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Terminal Server" 
 
 #disable rdp
 Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Terminal Server" -Name "fDenyTSConnections" -Value 1
-read-host "RDP can be reenabled in Windows settings just search for RDP and turn it on. Press enter to continue."
+read-host "Wait a minute or two for your score to update. If you lose points, RDP can be reenabled in Windows settings just search for RDP and turn it on. Press enter to continue."
 
 #The system is configured to use FIPS 140-compliant cryptographic algorithms
 Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Lsa" -Name "FIPSAlgorithmPolicy" -Value 1
@@ -324,9 +323,9 @@ Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Lsa" -Name "FIPSA
 #Get-ChildItem -Path "C:\Windows\System32" -Recurse -Include *backdoor*
 
 #Restart the computer
-Restart-computer
+#Restart-computer
 
-read-host "The script is finished. To make sure that settings are properly configured, go through the Battle Plan STEP BY STEP. DON'T SKIP ANYTHING. Fix any settings that weren't already done by the script, delete software, run updates, configure apps, delete mp3 files, and then try scrounging for points in group policies. You've got this!"
+read-host "The script is finished. To make sure that settings are properly configured, go through the Battle Plan STEP BY STEP. DON'T SKIP ANYTHING. Fix any settings that weren't already done by the script, delete software, run updates, configure apps, delete mp3 files, and then try scrounging for points in group policies. You've got this! Press enter to continue.
 
 #Disables script running
 Set-ExecutionPolicy Restricted
