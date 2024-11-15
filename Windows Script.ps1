@@ -11,13 +11,13 @@
 #C:\Users\ashepard\Downloads\Script.ps1
 
 #find .mp3 files
-Get-ChildItem -Path "C:\Users" -Filter "*.mp3" -Force -Recurse
-write-host "Go delete these mp3 files before continuing the script. Press Enter to continue"
-read-host
+#Get-ChildItem -Path "C:\Users" -Filter "*.mp3" -Force -Recurse -credential $cred
+#write-host "Go delete these mp3 files before continuing the script. Press Enter to continue"
+#read-host
 
 #rename local user / fix
-if(get-localuser -name Administator) {
-  rename-localuser Administator ExAdmin
+if(get-localuser -name Administators) {
+  rename-localuser Administators ExAdmin
   Disable-LocalUser -Name ExAdmin
   
 }
