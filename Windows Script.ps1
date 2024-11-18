@@ -16,8 +16,8 @@
 
 read-host "Before running this script, please go document all the info in the readme. Press enter to continue."
 #rename local user
-if(get-localuser -name Administators) {
-  rename-localuser Administators ExAdmin
+if(get-localuser -name Administator) {
+  rename-localuser Administator ExAdmin
   Disable-LocalUser -Name ExAdmin
   
 }
