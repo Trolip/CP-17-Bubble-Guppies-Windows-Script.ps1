@@ -28,7 +28,7 @@ if(get-localuser -name Guest) {
                                                             
                                                             #SECPOL
 #audit policy / fix
-auditpol /restore /file:audit.csv
+auditpol /restore /file:.\audit.csv
 #AuditPol /set /subcategory:"Object Access" /success:enable /failure:enable
 auditpol /set /category:*
 auditpol /set /category:"Account Logon" /success:enable /failure:enable
