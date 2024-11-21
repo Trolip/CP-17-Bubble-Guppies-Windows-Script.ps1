@@ -28,7 +28,7 @@ if(get-localuser -name Guest) {
                                                             
                                                             #SECPOL
 #audit policy / fix
-#auditpol /restore /file:audit.csv
+auditpol /restore /file:audit.csv
 #AuditPol /set /subcategory:"Object Access" /success:enable /failure:enable
 auditpol /set /category:*
 auditpol /set /category:"Account Logon" /success:enable /failure:enable
@@ -325,7 +325,7 @@ Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Lsa" -Name "FIPSA
 #Restart the computer
 #Restart-computer
 
-#read-host "The script is finished. To make sure that settings are properly configured, go through the Battle Plan STEP BY STEP. DON'T SKIP ANYTHING. Fix any settings that weren't already done by the script, delete software, run updates, configure apps, delete mp3 files, and then try scrounging for points in group policies. You've got this! Press enter to continue.
+read-host "The script is finished. To make sure that settings are properly configured, go through the Battle Plan STEP BY STEP. DON'T SKIP ANYTHING. Fix any settings that weren't already done by the script, delete software, run updates, configure apps, delete mp3 files, and then try scrounging for points in group policies. You've got this! Press enter to continue."
 
 #Disables script running
 Set-ExecutionPolicy Restricted
