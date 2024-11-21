@@ -1,3 +1,4 @@
+import module 
 #The next three code inputs (4,7,10) must be run manually before the script is run.
 
 #Enables script running
@@ -29,6 +30,8 @@ if(get-localuser -name Guest) {
                                                             #SECPOL
 #audit policy / fix
 auditpol /restore /file:.\audit.csv
+C:\Users\ashepard\Downloads\audit.csv
+#auditpol /set /category:* /file:C:\Users\ashepard\Downloads\audit.csv
 #AuditPol /set /subcategory:"Object Access" /success:enable /failure:enable
 auditpol /set /category:*
 auditpol /set /category:"Account Logon" /success:enable /failure:enable
