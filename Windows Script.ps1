@@ -69,9 +69,7 @@ Start-Service -Name WinDefend
 Set-Service -Name WinDefend -StartupType Automatic
 
                                               #SERVICES, PROCESSES, AND OPTIONAL FEATURES
-#stop process
-#Get-Process
-
+#set secondary logon to disabled
 #World Wide Web Publishing service has been stopped and disabled
 Stop-Service -Name w3svc
 
@@ -90,7 +88,16 @@ Disable-WindowsOptionalFeature -Online -FeatureName "IIS-FTPServer" -Remove
 
 #Removed Telnet from Windows features
 Disable-WindowsOptionalFeature -Online -FeatureName TelnetClient
-
+#disable smbv1 protocol
+Disable-WindowsOptionalFeature -Online -FeatureName SMB1Protocol
+#disable powershellv2
+Disable-WindowsOptionalFeature -Online -FeatureName MicrosoftWindowsPowerShellV2Root
+#disable tftp
+Disable-WindowsOptionalFeature -Online -FeatureName TFTPClient
+#disable simple tcpip services
+#Disable SNMP
+#disable Internet Information Services
+#disable Internet Information Services Hostable Web Core
 #Windows Update services are running (WaaSMedicSvc)
 Start-Service -Name WaaSMedicSvc
 
@@ -195,7 +202,8 @@ Set-LocalUser -Name "UserName" -PasswordNeverExpires $false
 
 
                                                               
-
+#delete proxies that allow for MitM attacks
+netsh interface portproxy delete v4tov4
                                                         #REGISTRY
 
 #DO not allow anonymous enumeration of SAM accounts
