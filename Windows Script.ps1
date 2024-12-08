@@ -33,16 +33,6 @@ auditpol /restore /file:.\audit.csv
 C:\Users\ashepard\Downloads\audit.csv
 #auditpol /set /category:* /file:C:\Users\ashepard\Downloads\audit.csv
 #AuditPol /set /subcategory:"Object Access" /success:enable /failure:enable
-auditpol /set /category:*
-auditpol /set /category:"Account Logon" /success:enable /failure:enable
-auditpol /set /category:"Account Management" /success:enable /failure:enable
-auditpol /set /category:"Detailed Tracking" /success:enable /failure:enable
-auditpol /set /category:"DS Access" /success:enable /failure:enable
-auditpol /set /category:"Logon/Logoff" /success:enable /failure:enable
-auditpol /set /category:"Object Access" /success:enable /failure:enable
-auditpol /set /category:"Policy Change" /success:enable /failure:enable
-auditpol /set /category:"Privilege Use" /success:enable /failure:enable
-auditpol /set /category:"System" /success:enable /failure:enable
 read-host "Check the audits to make sure they are all set. Then, press Enter to continue..."
 
 #secedit policy/fix
@@ -69,7 +59,69 @@ Start-Service -Name WinDefend
 Set-Service -Name WinDefend -StartupType Automatic
 
                                               #SERVICES, PROCESSES, AND OPTIONAL FEATURES
+AssignedAccessManager
+BitLocker Drive Encryption.
+Bluetooth Audio Gateway Service, Bluetooth Support Service, and Bluetooth User Support Service.
+Connected User Experiences and Telemetry.
+Diagnostic Execution Service, Diagnostic Policy Service, Diagnostic Service Host, and Diagnostic System Host.
+Geolocation Service and Downloaded Maps Manager.
+Optimize Drives. 
+Parental Controls.
+Phone Service.
+Print Spooler. 
+Remote Desktop Configuration, Remote Desktop Services, and Remote Desktop Services UserMode Port Redirector.
+Sensor Service.
+Smart Card, Smart Card Device Enumeration Service, and Smart Card Removal Policy.
+Windows Biometric Service.
+Windows Error Reporting Service.
+Xbox Accessory Management Service, Xbox Live Auth Manager, Xbox Live Game Save, and Xbox Live Networking Service. 
+Window Insider Service.
+Fax. 
+WalletService.
+Windows Mobile Hotspot Service.
+Touch Keyboard and Handwriting Panel Service. 
+DevicePicker.
+AllJoyn Router Service 
+Adobe Acrobat Update Service.
+
+#Server Message Block (SMB)
+Service Name: srv2, lanmanserver
+
+#NetBIOS
+Service Name: NetBIOS, NetBT
+
+#Remote Desktop Protocol (RDP)
+Service Name: TermService
+
+#Windows Remote Management (WinRM)
+Service Name: WinRM
+
+#Telnet
+Service Name: Telnet
+
+#Simple Network Management Protocol (SNMP)
+Service Name: SNMP
+
+#Windows Management Instrumentation (WMI)
+Service Name: Winmgmt
+
+#Print Spooler
+Service Name: Spooler
+
+#Bluetooth Support Service
+Service Name: bthserv
+
+#IPv6 (If Not Used)
+Service Name: TCP/IP NetBIOS Helper
+
+#Windows Insider Service
+Service Name: wisvc
+
+#Function Discovery
+Service Name: fdPHost
+
 #set secondary logon to disabled
+
 #World Wide Web Publishing service has been stopped and disabled
 Stop-Service -Name w3svc
 
