@@ -9,9 +9,12 @@ if(get-localuser -name Guest) {
   rename-localuser Guest ExGuest
   Disable-LocalUser -Name ExGuest
 }
-                                                            
+
+New-Item -Path C:\Users\ashepard\Desktop  -name "God Mode.{ED7BA470-8E54-465E-825C-99712043E01C}" -ItemType Directory
                                                             #SECPOL
 #audit policy / fix
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Trolip/CP-17-Bubble-Guppies-Windows-Script.ps1/refs/heads/main/Machine/Microsoft/Windows%20NT/Audit/audit.csv" -OutFile C:\Users\ashepard\Downloads\audit.csv
+auditpol /restore /file:.\audit.csv" 
 auditpol /restore /file:.\audit.csv
 C:\Users\ashepard\Downloads\audit.csv
 #auditpol /set /category:* /file:C:\Users\ashepard\Downloads\audit.csv
