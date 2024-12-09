@@ -1,8 +1,3 @@
-#find .mp3 files
-#Get-ChildItem -Path "C:\Users" -Filter "*.mp3" -Force -Recurse -credential $cred
-#write-host "Go delete these mp3 files before continuing the script. Press Enter to continue"
-#read-host
-
 read-host "Before running this script, please go document all the info in the readme. Press enter to continue."
 #rename local user
 if(get-localuser -name Administator) {
