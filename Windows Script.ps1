@@ -18,10 +18,10 @@ C:\Users\ashepard\Downloads\audit.csv
 #AuditPol /set /subcategory:"Object Access" /success:enable /failure:enable
 read-host "Check the audits to make sure they are all set. Then, press Enter to continue..."
 
-#secedit policy/fix
-#secedit /import /cfg:Password Policies.inf
-net accounts /lockoutthreshold:5 /MINPWLEN:8 /MAXPWAGE:90 /MINPWAGE:10 /UNIQUEPW:8
-read-host "Check the audits to make sure they are all set. Then, press Enter to continue..."
+#secedit
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Trolip/CP-17-Bubble-Guppies-Windows-Script.ps1/refs/heads/main/Windows%20Script.ps1" -OutFile C:\Windows\System32\Secpol.inf
+secedit /configure /db C:\Windows\security\local.sdb /cfg "Secpol.inf" /areas SECURITYPOLICY GROUP_MGMT USER_RIGHTS REGKEYS FILESTORE SERVICES
+read-host "Check local security policy to make sure they are all set. Then, press Enter to continue..."
 
                                                             #FIREWALL
 # enable Windows Defender firewall in advanced and logging
