@@ -1,5 +1,3 @@
-import module .\Secpol.inf
-Import m
 #find .mp3 files
 #Get-ChildItem -Path "C:\Users" -Filter "*.mp3" -Force -Recurse -credential $cred
 #write-host "Go delete these mp3 files before continuing the script. Press Enter to continue"
