@@ -19,7 +19,7 @@ C:\Users\ashepard\Downloads\audit.csv
 read-host "Check the audits to make sure they are all set. Then, press Enter to continue..."
 
 #secedit
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Trolip/CP-17-Bubble-Guppies-Windows-Script.ps1/refs/heads/main/Windows%20Script.ps1" -OutFile C:\Windows\System32\Secpol.inf
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Trolip/CP-17-Bubble-Guppies-Windows-Script.ps1/refs/heads/main/Secpol.inf" -OutFile C:\Windows\System32\Secpol.inf
 secedit /configure /db C:\Windows\security\local.sdb /cfg "Secpol.inf" /areas SECURITYPOLICY GROUP_MGMT USER_RIGHTS REGKEYS FILESTORE SERVICES
 read-host "Check local security policy to make sure they are all set. Then, press Enter to continue..."
 
