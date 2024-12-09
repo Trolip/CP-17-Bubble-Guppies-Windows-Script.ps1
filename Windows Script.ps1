@@ -1,15 +1,5 @@
-#The next three code inputs (4,7,10) must be run manually before the script is run.
-
-#Enables script running
-#Set-ExecutionPolicy Unrestricted
-
-#Download the script in Windows / change the name to your current user
-#Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Trolip/CP-17-Bubble-Guppies-Windows-Script.ps1/refs/heads/main/Windows%20Script.ps1" -OutFile C:\Users\ashepard\Downloads\Script.ps1
-#Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Trolip/CP-17-Bubble-Guppies-Windows-Script.ps1/refs/heads/main/audit.csv" -OutFile C:\Users\ashepard\Downloads\audit.csv
-
-#run script / change name to current user
-#C:\Users\ashepard\Downloads\Script.ps1
-
+import module .\Secpol.inf
+Import m
 #find .mp3 files
 #Get-ChildItem -Path "C:\Users" -Filter "*.mp3" -Force -Recurse -credential $cred
 #write-host "Go delete these mp3 files before continuing the script. Press Enter to continue"
