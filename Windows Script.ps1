@@ -2,13 +2,13 @@ read-host "Before running this script, please go document all the info in the re
 
 #rename local user
 if(get-localuser -name Administator) {
-  rename-localuser Administator ExAdmin
-  Disable-LocalUser -Name ExAdmin
+  rename-localuser Administator ExPerson1
+  Disable-LocalUser -Name ExPerson1
   
 }
 if(get-localuser -name Guest) {
-  rename-localuser Guest ExGuest
-  Disable-LocalUser -Name ExGuest
+  rename-localuser Guest ExPerson2
+  Disable-LocalUser -Name ExPerson2
 }
 $current_user = whoami
 New-Item -Path C:\Users\$current_user\Desktop  -name "God Mode.{ED7BA470-8E54-465E-825C-99712043E01C}" -ItemType Directory
