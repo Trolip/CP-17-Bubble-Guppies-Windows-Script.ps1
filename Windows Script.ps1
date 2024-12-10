@@ -1,4 +1,5 @@
 read-host "Before running this script, please go document all the info in the readme. Press enter to continue."
+
 #rename local user
 if(get-localuser -name Administator) {
   rename-localuser Administator ExAdmin
@@ -9,16 +10,16 @@ if(get-localuser -name Guest) {
   rename-localuser Guest ExGuest
   Disable-LocalUser -Name ExGuest
 }
-
-New-Item -Path C:\Users\ashepard\Desktop  -name "God Mode.{ED7BA470-8E54-465E-825C-99712043E01C}" -ItemType Directory
+$current_user = whoami
+New-Item -Path C:\Users\$current_user\Desktop  -name "God Mode.{ED7BA470-8E54-465E-825C-99712043E01C}" -ItemType Directory
                                                             #SECPOL
 #audit policy / fix
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Trolip/CP-17-Bubble-Guppies-Windows-Script.ps1/refs/heads/main/Machine/Microsoft/Windows%20NT/Audit/audit.csv" -OutFile C:\Users\ashepard\Downloads\audit.csv
-auditpol /restore /file:C:\Users\ashepard\Downloads\audit.csv
-C:\Users\ashepard\Downloads\audit.csv
-#auditpol /set /category:* /file:C:\Users\ashepard\Downloads\audit.csv
+#Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Trolip/CP-17-Bubble-Guppies-Windows-Script.ps1/refs/heads/main/Machine/Microsoft/Windows%20NT/Audit/audit.csv" -OutFile C:\Users\$current_user\Downloads\audit.csv
+#auditpol /restore /file:C:\Users\$current_user\Downloads\audit.csv
+#C:\Users\$current_user\Downloads\audit.csv
+#auditpol /set /category:* /file:C:\Users\$current_user\Downloads\audit.csv
 #AuditPol /set /subcategory:"Object Access" /success:enable /failure:enable
-read-host "Check the audits to make sure they are all set. Then, press Enter to continue..."
+read-host "Go to local security policy and set the audit policies and advanced audit policies. Then, press Enter to continue..."
 
 #secedit
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Trolip/CP-17-Bubble-Guppies-Windows-Script.ps1/refs/heads/main/Secpol.inf" -OutFile C:\Windows\System32\Secpol.inf
