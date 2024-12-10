@@ -14,8 +14,7 @@ New-Item -Path C:\Users\ashepard\Desktop  -name "God Mode.{ED7BA470-8E54-465E-82
                                                             #SECPOL
 #audit policy / fix
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Trolip/CP-17-Bubble-Guppies-Windows-Script.ps1/refs/heads/main/Machine/Microsoft/Windows%20NT/Audit/audit.csv" -OutFile C:\Users\ashepard\Downloads\audit.csv
-auditpol /restore /file:.\audit.csv" 
-auditpol /restore /file:.\audit.csv
+auditpol /restore /file:C:\Users\ashepard\Downloads\audit.csv
 C:\Users\ashepard\Downloads\audit.csv
 #auditpol /set /category:* /file:C:\Users\ashepard\Downloads\audit.csv
 #AuditPol /set /subcategory:"Object Access" /success:enable /failure:enable
