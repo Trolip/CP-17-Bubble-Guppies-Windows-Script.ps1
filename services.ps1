@@ -1,29 +1,64 @@
 #Disable Services
-#Enable Services
-Adobe Acrobat Update Service.
-AllJoyn Router Service 
-AssignedAccessManager
-BitLocker Drive Encryption.
-Bluetooth Audio Gateway Service, Bluetooth Support Service, and Bluetooth User Support Service.
-Connected User Experiences and Telemetry.
-DevicePicker.
-Diagnostic Execution Service, Diagnostic Policy Service, Diagnostic Service Host, and Diagnostic System Host.
-Fax. 
-Geolocation Service and Downloaded Maps Manager.
-Optimize Drives. 
-Parental Controls.
-Phone Service.
-Print Spooler. 
-Remote Desktop Configuration, Remote Desktop Services, and Remote Desktop Services UserMode Port Redirector.
-Sensor Service.
-Smart Card, Smart Card Device Enumeration Service, and Smart Card Removal Policy.
-Touch Keyboard and Handwriting Panel Service. 
-WalletService.
-Window Insider Service.
-Windows Biometric Service.
-Windows Error Reporting Service.
-Windows Mobile Hotspot Service.
-Xbox Accessory Management Service, Xbox Live Auth Manager, Xbox Live Game Save, and Xbox Live Networking Service. 
+
+#Adobe Acrobat Update Service.
+stop-service -name nc | set-service -name nc.exe -startuptype Disabled
+#AllJoyn Router Service
+set-service -name AJRouter -startuptype Disabled | stop-service -name AJRouter 
+#AssignedAccessManager
+set-service -name AssignedAccessManagerSvc -startuptype Disabled|stop-service -name AssignedAccessManagerSvc 
+#BitLocker Drive Encryption.
+set-service -name BDESVC -startuptype Disabled|stop-service -name BDESVC 
+#Bluetooth Audio Gateway Service, Bluetooth Support Service, and Bluetooth User Support Service.
+set-service -name BTAGService -startuptype Disabled|stop-service -name BTAGService
+set-service -name bthserv -startuptype Disabled|stop-service -name bthserv
+set-service -name BluetoothUserService_63bcf -startuptype Disabled|stop-service -name BluetoothUserService_63bcf
+#Connected User Experiences and Telemetry.
+stop-service -name DiagTrack|set-service -name DiagTrack -startuptype Disabled
+#DevicePicker.
+set-service -name DevicePickerUserSvc_63bcf -startuptype Disabled|stop-service -name DevicePickerUserSvc_63bcf
+#Diagnostic Execution Service, Diagnostic Policy Service, Diagnostic Service Host, and Diagnostic System Host.
+stop-service -name DiagTrack|set-service -name DiagTrack -startuptype Disabled
+stop-service -name DiagTrack|set-service -name DiagTrack -startuptype Disabled
+stop-service -name DiagTrack|set-service -name DiagTrack -startuptype Disabled
+stop-service -name DiagTrack|set-service -name DiagTrack -startuptype Disabled
+#Fax.
+set-service -name Fax -startuptype Disabled|stop-service -name Fax
+#Geolocation Service and Downloaded Maps Manager.
+set-service -name lfsvc -startuptype Disabled|stop-service -name lfsvc
+set-service -name MapsBroker -startuptype Disabled|stop-service -name MapsBroker
+#Optimize Drives. 
+stop-service -name defragsvc|set-service -name defragsvc -startuptype Disabled
+#Parental Controls.
+stop-service -name WpcMonSvc|set-service -name WpcMonSvc -startuptype Disabled
+#Phone Service.
+stop-service -name PhoneSvc|set-service -name PhoneSvc -startuptype Disabled
+#Print Spooler. 
+stop-service -name Spooler|set-service -name Spooler -startuptype Disabled
+#Remote Desktop Configuration, Remote Desktop Services, and Remote Desktop Services UserMode Port Redirector.
+stop-service -name SessionEnv|set-service -name SessionEnv -startuptype Disabled
+stop-service -name TermService|set-service -name TermService -startuptype Disabled
+stop-service -name UmRdpService|set-service -name UmRdpService -startuptype Disabled
+#Sensor Service.
+stop-service -name SensorService|set-service -name SensorService -startuptype Disabled
+#Smart Card, Smart Card Device Enumeration Service, and Smart Card Removal Policy.
+stop-service -name DiagTrack|set-service -name DiagTrack -startuptype Disabled
+stop-service -name DiagTrack|set-service -name DiagTrack -startuptype Disabled
+stop-service -name DiagTrack|set-service -name DiagTrack -startuptype Disabled
+#Touch Keyboard and Handwriting Panel Service. 
+stop-service -name DiagTrack|set-service -name DiagTrack -startuptype Disabled
+#WalletService.
+stop-service -name DiagTrack|set-service -name DiagTrack -startuptype Disabled
+#Window Insider Service.
+stop-service -name DiagTrack|set-service -name DiagTrack -startuptype Disabled
+#Windows Biometric Service.
+stop-service -name DiagTrack|set-service -name DiagTrack -startuptype Disabled
+#Windows Error Reporting Service.
+stop-service -name DiagTrack|set-service -name DiagTrack -startuptype Disabled
+#Windows Mobile Hotspot Service.
+stop-service -name DiagTrack|set-service -name DiagTrack -startuptype Disabled
+#Xbox Accessory Management Service, Xbox Live Auth Manager, Xbox Live Game Save, and Xbox Live Networking Service.
+stop-service -name DiagTrack|set-service -name DiagTrack -startuptype Disabled
+
 #Server Message Block (SMB)
 Service Name: srv2, lanmanserver
 
@@ -48,8 +83,6 @@ Service Name: Winmgmt
 #Print Spooler
 Service Name: Spooler
 
-#Bluetooth Support Service
-Service Name: bthserv
 
 #IPv6 (If Not Used)
 Service Name: TCP/IP NetBIOS Helper
@@ -74,9 +107,7 @@ stop-service -name nc
 Set-Service -Name "nc.exe" -StartupType "Disabled"
 
 #disable FTP
-Stop-Service -Name ftpsvc
-Set-Service -Name ftpsvc -StartupType Disabled
-Disable-WindowsOptionalFeature -Online -FeatureName "IIS-FTPServer" -Remove
+Stop-Service -Name ftpsvc|Set-Service -Name ftpsvc -StartupType Disabled|Disable-WindowsOptionalFeature -Online -FeatureName "IIS-FTPServer" -Remove
 
 #Removed Telnet from Windows features
 Disable-WindowsOptionalFeature -Online -FeatureName TelnetClient
@@ -99,6 +130,8 @@ Start-Service -Name wuauserv
 
 #Windows Event Log service is running
 Start-Service -Name eventlog
+
+set-service -name gpsvc -startuptype automatic | start-service -name gpsvc 
 
 #The system requires approval from an administrator before running unknown software and Users cannot bypass attempts to run unknown software
 Set-MpPreference -EnableSmartScreen $true
