@@ -34,6 +34,7 @@ read-host "Check local security policy to make sure they are all set. Then, pres
 # enable Windows Defender firewall in advanced and logging
 Set-NetFirewallProfile -Profile Domain, Private, Public -DefaultInboundAction Block -DefaultOutboundAction Allow
 Set-NetFirewallProfile -Profile Domain, Public, Private -LogFileName "C:\FirewallLog.log" -LogAllowed True -LogBlocked True -LogIgnored True
+#add rules that block insecure ports
 
 #Windows Defender no longer runs in passive mode'
 Set-MpPreference -DisableRealtimeMonitoring $false
@@ -214,6 +215,8 @@ read-host "Wait a minute or two for your score to update. If you lose points, RD
 
 #The system is configured to use FIPS 140-compliant cryptographic algorithms
 Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Lsa" -Name "FIPSAlgorithmPolicy" -Value 1
+
+#screensaver password
 
 #check for hidden network shares
 #Get-WmiObject -Class Win32_Share | Where-Object { $_.Type -eq 0 }
