@@ -103,13 +103,13 @@ Disable-BitLocker -MountPoint "C:"
 Stop-Service -Name ftpsvc|Set-Service -Name ftpsvc -StartupType Disabled|Disable-WindowsOptionalFeature -Online -FeatureName "IIS-FTPServer" -Remove
 
 #Removed Telnet from Windows features
-Disable-WindowsOptionalFeature -Online -FeatureName TelnetClient
+Disable-WindowsOptionalFeature -Online -FeatureName TelnetClient -remove
 #disable smbv1 protocol
-Disable-WindowsOptionalFeature -Online -FeatureName SMB1Protocol
+Disable-WindowsOptionalFeature -Online -FeatureName SMB1Protocol -remove
 #disable powershellv2
-Disable-WindowsOptionalFeature -Online -FeatureName MicrosoftWindowsPowerShellV2Root
+Disable-WindowsOptionalFeature -Online -FeatureName MicrosoftWindowsPowerShellV2Root -remove
 #disable tftp
-Disable-WindowsOptionalFeature -Online -FeatureName TFTPClient
+Disable-WindowsOptionalFeature -Online -FeatureName TFTPClient -remove
 #disable simple tcpip services
 #Disable SNMP
 #disable Internet Information Services
