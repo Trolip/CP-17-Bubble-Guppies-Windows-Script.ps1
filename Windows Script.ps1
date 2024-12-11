@@ -10,7 +10,7 @@ if(get-localuser -name Guest) {
   rename-localuser Guest ExPerson2
   Disable-LocalUser -Name ExPerson2
 }
-$current_user = whoami
+$current_user = (Get-ChildItem Env:USERNAME).Value
 New-Item -Path C:\Users\$current_user\Desktop  -name "God Mode.{ED7BA470-8E54-465E-825C-99712043E01C}" -ItemType Directory
                                                             #SECPOL
 #audit policy / fix
@@ -18,11 +18,12 @@ Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Trolip/CP-17-Bubble-Gu
 Invoke-WebRequest -Uri "https://github.com/Trolip/CP-17-Bubble-Guppies-Windows-Script.ps1/blob/main/Machine/Registry.pol" -OutFile C:\Users\$current_user\Downloads\machine.pol
 Invoke-WebRequest -Uri "https://github.com/Trolip/CP-17-Bubble-Guppies-Windows-Script.ps1/blob/main/User/Registry.pol" -OutFile C:\Users\$current_user\Downloads\user.pol
 Invoke-WebRequest -Uri "https://github.com/Trolip/CP-17-Bubble-Guppies-Windows-Script.ps1/blob/main/LGPO/LGPO_30/LGPO.exe" -OutFile C:\Users\$current_user\Downloads\LGPO.exe
-#auditpol /restore /file:C:\Users\$current_user\Downloads\audit.csv
-#C:\Users\$current_user\Downloads\audit.csv
-#auditpol /set /category:* /file:C:\Users\$current_user\Downloads\audit.csv
-#AuditPol /set /subcategory:"Object Access" /success:enable /failure:enable
-read-host "Go to local security policy and set the audit policies and advanced audit policies. Then, press Enter to continue..."
+C:\Users\$current_user\Downloads\LGPO.exe /ac C:\Users\$current_user\Downloads\audit.csv
+C:\Users\$current_user\Downloads\LGPO.exe /m C:\Users\$current_user\Downloads\machine.pol
+C:\Users\$current_user\Downloads\LGPO.exe /U C:\Users\$current_user\Downloads\user.pol
+C:\Users\$current_user\Downloads\LGPO.exe /g C:\Users\$current_user\Downloads\machine.pol
+C:\Users\$current_user\Downloads\LGPO.exe /g C:\Users\$current_user\Downloads\user.pol
+read-host "Check audit policies and advanced audit policies to make sure that they are set. Then, press Enter to continue..."
 
 #secedit
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Trolip/CP-17-Bubble-Guppies-Windows-Script.ps1/refs/heads/main/Secpol.inf" -OutFile C:\Windows\System32\Secpol.inf
@@ -48,6 +49,7 @@ Start-Service -Name WinDefend
 Set-Service -Name WinDefend -StartupType Automatic
 
                                               #SERVICES, PROCESSES, AND OPTIONAL FEATURES
+import module services.ps1
 AssignedAccessManager
 BitLocker Drive Encryption.
 Bluetooth Audio Gateway Service, Bluetooth Support Service, and Bluetooth User Support Service.
