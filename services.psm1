@@ -34,11 +34,22 @@ stop-service -name PhoneSvc|set-service -name PhoneSvc -startuptype Disabled
 #Print Spooler. 
 stop-service -name Spooler|set-service -name Spooler -startuptype Disabled
 
-add if
-#Remote Desktop Configuration, Remote Desktop Services, and Remote Desktop Services UserMode Port Redirector.
-stop-service -name SessionEnv|set-service -name SessionEnv -startuptype Disabled
-stop-service -name TermService|set-service -name TermService -startuptype Disabled
-stop-service -name UmRdpService|set-service -name UmRdpService -startuptype Disabled
+while (true){
+  $input = read-host "Enter 1 to disable remote desktop, 2 to enable it, or done to continue the script."
+    if ($input -eq "done") {
+      break
+    }
+    elseif ($input -eq "1") {
+      stop-service -name SessionEnv|set-service -name SessionEnv -startuptype Disabled
+      stop-service -name TermService|set-service -name TermService -startuptype Disabled
+      stop-service -name UmRdpService|set-service -name UmRdpService -startuptype Disabled
+    }
+    elseif ($input -eq "2") {
+      set-service -name SessionEnv -startuptype automatic|start-service -name SessionEnv
+      set-service -name TermService -startuptype automatic|start-service -name TermService
+      set-service -name UmRdpService -startuptype automatic|start-service -name UmRdpService
+    }
+}
 #Sensor Service.
 stop-service -name SensorService|set-service -name SensorService -startuptype Disabled
 #Smart Card, Smart Card Device Enumeration Service, and Smart Card Removal Policy.
