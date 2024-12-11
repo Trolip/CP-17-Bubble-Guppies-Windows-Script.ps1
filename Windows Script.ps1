@@ -15,9 +15,9 @@ New-Item -Path C:\Users\$current_user\Desktop  -name "God Mode.{ED7BA470-8E54-46
                                                             #SECPOL
 #audit policy / fix
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Trolip/CP-17-Bubble-Guppies-Windows-Script.ps1/refs/heads/main/Machine/Microsoft/Windows%20NT/Audit/audit.csv" -OutFile C:\Users\$current_user\Downloads\audit.csv
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Trolip/CP-17-Bubble-Guppies-Windows-Script.ps1/refs/heads/main/Machine/Microsoft/Windows%20NT/Audit/audit.csv" -OutFile C:\Users\$current_user\Downloads\machine.pol
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Trolip/CP-17-Bubble-Guppies-Windows-Script.ps1/refs/heads/main/Machine/Microsoft/Windows%20NT/Audit/audit.csv" -OutFile C:\Users\$current_user\Downloads\user.pol
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Trolip/CP-17-Bubble-Guppies-Windows-Script.ps1/refs/heads/main/Machine/Microsoft/Windows%20NT/Audit/audit.csv" -OutFile C:\Users\$current_user\Downloads\LGPO.exe
+Invoke-WebRequest -Uri "https://github.com/Trolip/CP-17-Bubble-Guppies-Windows-Script.ps1/blob/main/Machine/Registry.pol" -OutFile C:\Users\$current_user\Downloads\machine.pol
+Invoke-WebRequest -Uri "https://github.com/Trolip/CP-17-Bubble-Guppies-Windows-Script.ps1/blob/main/User/Registry.pol" -OutFile C:\Users\$current_user\Downloads\user.pol
+Invoke-WebRequest -Uri "https://github.com/Trolip/CP-17-Bubble-Guppies-Windows-Script.ps1/blob/main/LGPO/LGPO_30/LGPO.exe" -OutFile C:\Users\$current_user\Downloads\LGPO.exe
 #auditpol /restore /file:C:\Users\$current_user\Downloads\audit.csv
 #C:\Users\$current_user\Downloads\audit.csv
 #auditpol /set /category:* /file:C:\Users\$current_user\Downloads\audit.csv
