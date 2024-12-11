@@ -225,52 +225,49 @@ Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Lsa" -Name "FIPSA
 
                                                                               #UPDATES
 #install winget
-
-#update firefox
-#if(Get-ChildItem "C:\Program Files\Mozilla Firefox" -Recurse -Filter firefox.exe -or Get-ChildItem "C:\Program Files (x86)\Mozilla Firefox" -Recurse -Filter firefox.exe
-#){
-# winget upgrade "Mozilla Firefox"
-#}
+$progressPreference = 'silentlyContinue'
+Write-Host "Installing WinGet PowerShell module from PSGallery..."
+Install-PackageProvider -Name NuGet -Force | Out-Null
+Install-Module -Name Microsoft.WinGet.Client -Force -Repository PSGallery | Out-Null
+Write-Host "Using Repair-WinGetPackageManager cmdlet to bootstrap WinGet..."
+Repair-WinGetPackageManager
+Write-Host "Done."
+update firefox
+if(Get-ChildItem "C:\Program Files\Mozilla Firefox" -Recurse -Filter firefox.exe -or Get-ChildItem "C:\Program Files (x86)\Mozilla Firefox" -Recurse -Filter firefox.exe
+){
+ winget upgrade "Mozilla Firefox"
+}
 
 #update chrome
-#if(Get-ChildItem "C:\Program Files\Google Chrome" -Recurse -Filter Chrome.exe -or Get-ChildItem "C:\Program Files (x86)\Google Chrome" -Recurse -Filter chrome.exe
-#){
- # winget upgrade "Google Chrome"
-#}
+if(Get-ChildItem "C:\Program Files\Google Chrome" -Recurse -Filter Chrome.exe -or Get-ChildItem "C:\Program Files (x86)\Google Chrome" -Recurse -Filter chrome.exe
+){
+  winget upgrade "Google Chrome"
+}
 
-#update mozilla thunderbird
-#if(Get-ChildItem "C:\Program Files\Mozilla Thunderbird" -Recurse -Filter thunderbird.exe -or Get-ChildItem "C:\Program Files (x86)\Mozilla Thunderbird" -Recurse -Filter thunderbird.exe
-#){
- # winget upgrade "Mozilla Thunderbird"
-#}
+update mozilla thunderbird
+if(Get-ChildItem "C:\Program Files\Mozilla Thunderbird" -Recurse -Filter thunderbird.exe -or Get-ChildItem "C:\Program Files (x86)\Mozilla Thunderbird" -Recurse -Filter thunderbird.exe
+){
+  winget upgrade "Mozilla Thunderbird"
+}
 
-#notepad updated
-#if(Get-ChildItem "C:\Program Files\Notepad" -Recurse -Filter notepad.exe -or Get-ChildItem "C:\Program Files (x86)\Notepad" -Recurse -Filter notepad.exe
-#){
-#  winget upgrade "Notepad"
-#}
+notepad updated
+if(Get-ChildItem "C:\Program Files\Notepad" -Recurse -Filter notepad.exe -or Get-ChildItem "C:\Program Files (x86)\Notepad" -Recurse -Filter notepad.exe
+){
+  winget upgrade "Notepad"
+}
 
-#updates all apps
-#winget upgrade --all
+updates all apps
+winget upgrade --all
 
-#removed Wireshark
-#winget uninstall "Wireshark"
+removed Wireshark
+winget uninstall "Wireshark"
 
-#removed npcap
-#winget uninstall "Npcap"
+removed npcap
+winget uninstall "Npcap"
                                                           
-#windows update majority
-#Install-Module -Name PSWindowsUpdate -Force -Scope CurrentUser
-#Install-WindowsUpdate -AcceptAll -AutoReboot
-
-#Find-Script
-#find-script
-
-#check for shell backdoor in windows/systemresources
-#Get-ChildItem -Path "C:\Windows\System32" -Recurse -Include *backdoor*
-
-#Restart the computer
-#Restart-computer
+windows update majority
+Install-Module -Name PSWindowsUpdate -Force -Scope CurrentUser
+Install-WindowsUpdate -AcceptAll -AutoReboot
 
 read-host "The script is finished. To make sure that settings are properly configured, go through the Battle Plan STEP BY STEP. DON'T SKIP ANYTHING. Fix any settings that weren't already done by the script, delete software, run updates, configure apps, delete mp3 files, and then try scrounging for points in group policies. You've got this! Press enter to continue."
 
