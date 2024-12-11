@@ -1,6 +1,5 @@
 #Disable Services
-
-#Adobe Acrobat Update Service.
+function disableservices{
 stop-service -name nc | set-service -name nc.exe -startuptype Disabled
 #AllJoyn Router Service
 set-service -name AJRouter -startuptype Disabled | stop-service -name AJRouter 
@@ -121,6 +120,7 @@ Disable-WindowsOptionalFeature -Online -FeatureName TFTPClient
 #Disable SNMP
 #disable Internet Information Services
 #disable Internet Information Services Hostable Web Core
+}
 #Windows Update services are running (WaaSMedicSvc)
 Start-Service -Name WaaSMedicSvc
 
