@@ -49,7 +49,7 @@ Start-Service -Name WinDefend
 Set-Service -Name WinDefend -StartupType Automatic
 
                                               #SERVICES, PROCESSES, AND OPTIONAL FEATURES
-import module services.psm1
+import module .\services.psm1
 disableservices
 startservices
 
