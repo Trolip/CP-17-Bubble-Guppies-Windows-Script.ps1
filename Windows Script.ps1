@@ -50,8 +50,8 @@ Set-Service -Name WinDefend -StartupType Automatic
 
                                               #SERVICES, PROCESSES, AND OPTIONAL FEATURES
 import module .\services.psm1
-disableservices
-startservices
+disableservices{}
+startservices{}
 
                                                             #USERS
 #password for users
