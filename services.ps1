@@ -2,29 +2,29 @@
 function disableservices{
 stop-service -name nc | set-service -name nc.exe -startuptype Disabled
 #AllJoyn Router Service
-set-service -name AJRouter -startuptype Disabled | stop-service -name AJRouter 
+stop-service -name AJRouter|set-service -name AJRouter -startuptype Disabled
 #AssignedAccessManager
-set-service -name AssignedAccessManagerSvc -startuptype Disabled|stop-service -name AssignedAccessManagerSvc 
+stop-service -name AssignedAccessManagerSvc|set-service -name AssignedAccessManagerSvc -startuptype Disabled
 #BitLocker Drive Encryption.
-set-service -name BDESVC -startuptype Disabled|stop-service -name BDESVC 
+stop-service -name BDESVC|set-service -name BDESVC -startuptype Disabled
 #Bluetooth Audio Gateway Service, Bluetooth Support Service, and Bluetooth User Support Service.
-set-service -name BTAGService -startuptype Disabled|stop-service -name BTAGService
-set-service -name bthserv -startuptype Disabled|stop-service -name bthserv
-set-service -name BluetoothUserService_63bcf -startuptype Disabled|stop-service -name BluetoothUserService_63bcf
+stop-service -name BTAGService|set-service -name BTAGService -startuptype Disabled
+stop-service -name bthserv|set-service -name bthserv -startuptype Disabled
+stop-service -name BluetoothUserService_63bcf|set-service -name BluetoothUserService_63bcf -startuptype Disabled
 #Connected User Experiences and Telemetry.
 stop-service -name DiagTrack|set-service -name DiagTrack -startuptype Disabled
 #DevicePicker.
-set-service -name DevicePickerUserSvc_63bcf -startuptype Disabled|stop-service -name DevicePickerUserSvc_63bcf
+stop-service -name DevicePickerUserSvc_63bcf|set-service -name DevicePickerUserSvc_63bcf -startuptype Disabled
 #Diagnostic Execution Service, Diagnostic Policy Service, Diagnostic Service Host, and Diagnostic System Host.
 stop-service -name DiagTrack|set-service -name DiagTrack -startuptype Disabled
 stop-service -name DiagTrack|set-service -name DiagTrack -startuptype Disabled
 stop-service -name DiagTrack|set-service -name DiagTrack -startuptype Disabled
 stop-service -name DiagTrack|set-service -name DiagTrack -startuptype Disabled
 #Fax.
-set-service -name Fax -startuptype Disabled|stop-service -name Fax
+stop-service -name Fax|set-service -name Fax -startuptype Disabled
 #Geolocation Service and Downloaded Maps Manager.
-set-service -name lfsvc -startuptype Disabled|stop-service -name lfsvc
-set-service -name MapsBroker -startuptype Disabled|stop-service -name MapsBroker
+stop-service -name lfsvc|set-service -name lfsvc -startuptype Disabled
+stop-service -name MapsBroker|set-service -name MapsBroker -startuptype Disabled
 #Optimize Drives. 
 stop-service -name defragsvc|set-service -name defragsvc -startuptype Disabled
 #Parental Controls.
@@ -33,6 +33,8 @@ stop-service -name WpcMonSvc|set-service -name WpcMonSvc -startuptype Disabled
 stop-service -name PhoneSvc|set-service -name PhoneSvc -startuptype Disabled
 #Print Spooler. 
 stop-service -name Spooler|set-service -name Spooler -startuptype Disabled
+
+add if
 #Remote Desktop Configuration, Remote Desktop Services, and Remote Desktop Services UserMode Port Redirector.
 stop-service -name SessionEnv|set-service -name SessionEnv -startuptype Disabled
 stop-service -name TermService|set-service -name TermService -startuptype Disabled
@@ -40,38 +42,29 @@ stop-service -name UmRdpService|set-service -name UmRdpService -startuptype Disa
 #Sensor Service.
 stop-service -name SensorService|set-service -name SensorService -startuptype Disabled
 #Smart Card, Smart Card Device Enumeration Service, and Smart Card Removal Policy.
-stop-service -name DiagTrack|set-service -name DiagTrack -startuptype Disabled
-stop-service -name DiagTrack|set-service -name DiagTrack -startuptype Disabled
-stop-service -name DiagTrack|set-service -name DiagTrack -startuptype Disabled
-#Touch Keyboard and Handwriting Panel Service. 
-stop-service -name DiagTrack|set-service -name DiagTrack -startuptype Disabled
+stop-service -name SCardSvr|set-service -name SCardSvr -startuptype Disabled
+stop-service -name ScDeviceEnum|set-service -name ScDeviceEnum -startuptype Disabled
+stop-service -name SCPolicySvc|set-service -name SCPolicySvc -startuptype Disabled
 #WalletService.
-stop-service -name DiagTrack|set-service -name DiagTrack -startuptype Disabled
+stop-service -name WalletService|set-service -name WalletService -startuptype Disabled
 #Window Insider Service.
-stop-service -name DiagTrack|set-service -name DiagTrack -startuptype Disabled
+stop-service -name wisvc|set-service -name wisvc -startuptype Disabled
 #Windows Biometric Service.
-stop-service -name DiagTrack|set-service -name DiagTrack -startuptype Disabled
-#Windows Error Reporting Service.
-stop-service -name DiagTrack|set-service -name DiagTrack -startuptype Disabled
+stop-service -name WbioSrvc|set-service -name WbioSrvc -startuptype Disabled
 #Windows Mobile Hotspot Service.
-stop-service -name DiagTrack|set-service -name DiagTrack -startuptype Disabled
+stop-service -name icssvc|set-service -name icssvc -startuptype Disabled
 #Xbox Accessory Management Service, Xbox Live Auth Manager, Xbox Live Game Save, and Xbox Live Networking Service.
-stop-service -name DiagTrack|set-service -name DiagTrack -startuptype Disabled
+stop-service -name XboxGipSvc|set-service -name XboxGipSvc -startuptype Disabled
+stop-service -name XblAuthManager|set-service -name XblAuthManager -startuptype Disabled
+stop-service -name XblGameSave|set-service -name XblGameSave -startuptype Disabled
+stop-service -name XboxNetApiSvc|set-service -name XboxNetApiSvc -startuptype Disabled
 
-#Server Message Block (SMB)
-Service Name: srv2, lanmanserver
-
+Remote Procedure Call (RPC) Locator
 #NetBIOS
 Service Name: NetBIOS, NetBT
 
-#Remote Desktop Protocol (RDP)
-Service Name: TermService
-
 #Windows Remote Management (WinRM)
 Service Name: WinRM
-
-#Telnet
-Service Name: Telnet
 
 #Simple Network Management Protocol (SNMP)
 Service Name: SNMP
@@ -79,20 +72,11 @@ Service Name: SNMP
 #Windows Management Instrumentation (WMI)
 Service Name: Winmgmt
 
-#Print Spooler
-Service Name: Spooler
-
-
 #IPv6 (If Not Used)
 Service Name: TCP/IP NetBIOS Helper
 
-#Windows Insider Service
-Service Name: wisvc
-
 #Function Discovery
 Service Name: fdPHost
-
-#set secondary logon to disabled
 
 #World Wide Web Publishing service has been stopped and disabled
 Stop-Service -Name w3svc
@@ -101,9 +85,8 @@ Stop-Service -Name w3svc
 Stop-Service -Name upnphost
 Set-Service -Name upnphost -StartupType Disabled
 
-#stop services
-stop-service -name nc
-Set-Service -Name "nc.exe" -StartupType "Disabled"
+#disable Bitlocker
+Disable-BitLocker -MountPoint "C:"
 
 #disable FTP
 Stop-Service -Name ftpsvc|Set-Service -Name ftpsvc -StartupType Disabled|Disable-WindowsOptionalFeature -Online -FeatureName "IIS-FTPServer" -Remove
@@ -121,8 +104,20 @@ Disable-WindowsOptionalFeature -Online -FeatureName TFTPClient
 #disable Internet Information Services
 #disable Internet Information Services Hostable Web Core
 }
+function startservices{
+#Touch Keyboard and Handwriting Panel Service
 #Windows Update services are running (WaaSMedicSvc)
 Start-Service -Name WaaSMedicSvc
+
+#Windows Defender Advanced Threat Protection Service
+#Windows Defender Antivirus Service
+#Windows Defender Antivirus Network Inspection Service
+#Windows Defender Firewall
+#Windows Event Log
+#Security Center
+#Open TFTP MultiThreaded Server
+#Group Policy Client
+#CCS Client
 
 #Windows Automatic Updates are enabled'
 Set-Service -Name wuauserv -StartupType Automatic
@@ -138,6 +133,4 @@ Set-MpPreference -EnableSmartScreen $true
 
 #Windows SmartScreen configured to warn or block
 Set-MpPreference -EnableSmartScreen $true -SmartScreenAppInstallControl "Block"
-
-#disable Bitlocker
-Disable-BitLocker -MountPoint "C:"
+}
