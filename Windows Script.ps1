@@ -143,38 +143,14 @@ Set-LocalUser -Name "UserName" -PasswordNeverExpires $false
 netsh interface portproxy delete v4tov4
                                                         #REGISTRY
 
-#DO not allow anonymous enumeration of SAM accounts
-Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Lsa" -Name "RestrictAnonymous" -Value 1
-
-#restrict global object creation
-Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Lsa" -Name "RestrictGlobalObjects" -Value 1
-
 #RDP Security Layer set to SSL
 Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Terminal Server" -Name "SecurityLayer" -Value 1
-
-#passwords stored using reversible encryption
-Set-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System" -Name "AllowPasswordsToBeStoredUsingReversibleEncryption" -Value 0
 
 #LAN Manager only sends NTLMv2 responses'
 Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Lsa" -Name "LmCompatibilityLevel" -Value 5
 
 #NULL session fallback is prohibited'
 Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Lsa" -Name "RestrictAnonymous" -Value 1
-
-#Elevation prompts run on the secure desktop'
-Set-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System" -Name "PromptOnSecureDesktop" -Value 1
-
-#Users cannot add or logon with Microsoft accounts
-read-host "Go to security options in local security policies and enable Accounts: Block Microsoft accounts. Press enter to continue."
-
-#Nobody can access Credential Manager as a trusted caller
-read-host "Navigate to gpedit.msc. Press enter to continue."
-read-host "Go to Computer Configuration > Administrative Templates > System > Credentials Delegation. Press enter to continue."
-read-host "disable the following policies to ensure Credential Manager is protected:. Press enter to continue."
-write-host "Allow delegating saved credentials with NTLM-only server authentication"
-write-host "Allow delegating saved credentials with NTLM authentication"
-write-host "Allow delegating saved credentials"
-read-host "Press enter when you are ready to move on"
 
 
 #Firefox profiles and sync disabled'
@@ -203,12 +179,6 @@ write-host "Find and disable the Policy:"
 write-host "Locate the policy: Turn off the Store application"
 read-host "Press enter to move on."
 
-#UEFI Secure Boot is enabled
-Get-WmiObject -Class Win32_BIOS | Select-Object SecureBoot
-
-#RDP connections require SSL'
-Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Terminal Server" -Name "SecurityLayer" -Value 1
-
 #disable rdp
 Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Terminal Server" -Name "fDenyTSConnections" -Value 1
 read-host "Wait a minute or two for your score to update. If you lose points, RDP can be reenabled in Windows settings just search for RDP and turn it on. Press enter to continue."
@@ -216,26 +186,11 @@ read-host "Wait a minute or two for your score to update. If you lose points, RD
 #The system is configured to use FIPS 140-compliant cryptographic algorithms
 Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Lsa" -Name "FIPSAlgorithmPolicy" -Value 1
 
-#screensaver password
-
-#check for hidden network shares
-#Get-WmiObject -Class Win32_Share | Where-Object { $_.Type -eq 0 }
-
-#stop process
-#Get-Process
-#Stop-Process -Name "notepad"
-#Stop-Process -Id 1234
 
                                                                               #UPDATES
 #install winget
-$progressPreference = 'silentlyContinue'
-Write-Host "Installing WinGet PowerShell module from PSGallery..."
-Install-PackageProvider -Name NuGet -Force | Out-Null
-Install-Module -Name Microsoft.WinGet.Client -Force -Repository PSGallery | Out-Null
-Write-Host "Using Repair-WinGetPackageManager cmdlet to bootstrap WinGet..."
-Repair-WinGetPackageManager
-Write-Host "Done."
-update firefox
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Trolip/CP-17-Bubble-Guppies-Windows-Script.ps1/refs/heads/main/winget.exe" -OutFile C:\Program Files\WindowsApps\winget.exe
+#update firefox
 if(Get-ChildItem "C:\Program Files\Mozilla Firefox" -Recurse -Filter firefox.exe -or Get-ChildItem "C:\Program Files (x86)\Mozilla Firefox" -Recurse -Filter firefox.exe
 ){
  winget upgrade "Mozilla Firefox"
@@ -247,28 +202,28 @@ if(Get-ChildItem "C:\Program Files\Google Chrome" -Recurse -Filter Chrome.exe -o
   winget upgrade "Google Chrome"
 }
 
-update mozilla thunderbird
+#update mozilla thunderbird
 if(Get-ChildItem "C:\Program Files\Mozilla Thunderbird" -Recurse -Filter thunderbird.exe -or Get-ChildItem "C:\Program Files (x86)\Mozilla Thunderbird" -Recurse -Filter thunderbird.exe
 ){
   winget upgrade "Mozilla Thunderbird"
 }
 
-notepad updated
+#notepad updated
 if(Get-ChildItem "C:\Program Files\Notepad" -Recurse -Filter notepad.exe -or Get-ChildItem "C:\Program Files (x86)\Notepad" -Recurse -Filter notepad.exe
 ){
   winget upgrade "Notepad"
 }
 
-updates all apps
+#updates all apps
 winget upgrade --all
 
-removed Wireshark
+#removed Wireshark
 winget uninstall "Wireshark"
 
-removed npcap
+#removed npcap
 winget uninstall "Npcap"
                                                           
-windows update majority
+#windows update majority
 Install-Module -Name PSWindowsUpdate -Force -Scope CurrentUser
 Install-WindowsUpdate -AcceptAll -AutoReboot
 
