@@ -180,7 +180,6 @@ set-service -name gpsvc -startuptype automatic | start-service -name gpsvc
 Set-MpPreference -EnableSmartScreen $true
 #Windows SmartScreen configured to warn or block
 Set-MpPreference -EnableSmartScreen $true -SmartScreenAppInstallControl "Block"
-}
 
                                                             #USERS
 #password for users
