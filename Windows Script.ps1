@@ -19,6 +19,7 @@ Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Trolip/CP-17-Bubble-Gu
 Invoke-WebRequest -Uri "https://github.com/Trolip/CP-17-Bubble-Guppies-Windows-Script.ps1/blob/main/Machine/Registry.pol" -OutFile C:\Users\$current_user\Downloads\machine.pol
 Invoke-WebRequest -Uri "https://github.com/Trolip/CP-17-Bubble-Guppies-Windows-Script.ps1/blob/main/User/Registry.pol" -OutFile C:\Users\$current_user\Downloads\user.pol
 Invoke-WebRequest -Uri "https://github.com/Trolip/CP-17-Bubble-Guppies-Windows-Script.ps1/blob/main/LGPO/LGPO_30/LGPO.exe" -OutFile C:\Users\$current_user\Downloads\LGPO.exe
+C:\Users\$current_user\Downloads\LGPO.exe /g C:\Users\$current_user\Downloads\audit.csv
 C:\Users\$current_user\Downloads\LGPO.exe /ac C:\Users\$current_user\Downloads\audit.csv
 C:\Users\$current_user\Downloads\LGPO.exe /m C:\Users\$current_user\Downloads\machine.pol
 C:\Users\$current_user\Downloads\LGPO.exe /U C:\Users\$current_user\Downloads\user.pol
