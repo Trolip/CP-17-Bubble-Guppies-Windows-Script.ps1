@@ -11,6 +11,7 @@ if(get-localuser -name Guest) {
   Disable-LocalUser -Name ExPerson2
 }
 $current_user = (Get-ChildItem Env:USERNAME).Value
+$current_user = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name.Split('\')[-1]
 New-Item -Path C:\Users\$current_user\Desktop  -name "God Mode.{ED7BA470-8E54-465E-825C-99712043E01C}" -ItemType Directory
                                                             #SECPOL
 #audit policy / fix
